@@ -1,6 +1,6 @@
 # ETLDemo
 
-  - [Demo連結](https://shuming-yu.github.io/ETLDemo/#/)
+  - [Demo連結](https://shuming-yu.github.io/ETLDemo/)
 
 ``` cmd
 npm install axios
