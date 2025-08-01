@@ -6,9 +6,9 @@
       <div class="col full-height">
         <q-card>
           <q-card-section class="q-pa-none">
-            <q-table grid dense :rows="rows" :columns="columns" :filter="filter" :rows-per-page-options=[0]>
+            <q-table grid dense :rows="table.rows" :columns="table.columns" :filter="table.filter" :rows-per-page-options=[0]>
               <template v-slot:top-right>
-                <q-input class="q-pl-md" clearable dense debounce="300" v-model="filter" placeholder="Search">
+                <q-input class="q-pl-md" clearable dense debounce="300" v-model="table.filter" placeholder="Search">
                   <template v-slot:append>
                     <q-icon name="search" />
                   </template>
@@ -82,6 +82,7 @@
 </template>
 
 <script setup lang="ts">
+import { type QTableProps } from "quasar";
 import { ref, reactive, onMounted } from 'vue'
 import { httpGetRequest, httpPostRequest, httpDownloadJson, showSuccessNotify } from "@/utils/webUtil";
 import { date, Dialog } from 'quasar'
@@ -97,36 +98,42 @@ import type { ETLFlow } from "@/types/ETLFlow"
 import { useFlowDiagramStore } from "@/stores/flowDiagram";
 const flowDiagram = useFlowDiagramStore();
 
+// 假資料
+import allETLTopics from "@/data/allETLTopics.json";
+
 onMounted(() => {
   getAllETLTopics();
 })
 
-const filter = ref<string>('');
-const rows = reactive<ConstValueList[]>([]);
-const columns = reactive<any[]>([
-  { name: 'ID', label: t('ID'), field: 'ID', align: 'left', sortable: true },
-  { name: 'Type', label: t('Type'), field: 'Type', align: 'left', sortable: true },
-  { name: 'Value', label: t('Value'), field: 'Value', align: 'left', sortable: true },
-  { name: 'Descr', label: t('Descr'), field: 'Descr', align: 'left', sortable: true },
-  { name: 'Editor', label: t('Editor'), field: 'Editor', align: 'left', sortable: true },
-  { name: 'Cdt', label: t('Cdt'), field: 'Cdt', align: 'left', sortable: true },
-  { name: 'Udt', label: t('Udt'), field: 'Udt', align: 'left', sortable: true },
-  { name: 'ETLVersion', label: t('ETLVersion'), field: 'ETLVersion', align: 'left', sortable: true },
-  { name: 'HasETLRelation', label: t('HasETLRelation'), field: 'HasETLRelation', align: 'left', sortable: true },
-]);
+const table = reactive<QTableProps>({
+  filter: "",
+  rows: [],
+  columns: [
+    { name: 'ID', label: t('ID'), field: 'ID', align: 'left', sortable: true },
+    { name: 'Type', label: t('Type'), field: 'Type', align: 'left', sortable: true },
+    { name: 'Value', label: t('Value'), field: 'Value', align: 'left', sortable: true },
+    { name: 'Descr', label: t('Descr'), field: 'Descr', align: 'left', sortable: true },
+    { name: 'Editor', label: t('Editor'), field: 'Editor', align: 'left', sortable: true },
+    { name: 'Cdt', label: t('Cdt'), field: 'Cdt', align: 'left', sortable: true },
+    { name: 'Udt', label: t('Udt'), field: 'Udt', align: 'left', sortable: true },
+    { name: 'ETLVersion', label: t('ETLVersion'), field: 'ETLVersion', align: 'left', sortable: true },
+    { name: 'HasETLRelation', label: t('HasETLRelation'), field: 'HasETLRelation', align: 'left', sortable: true },
+  ],
+});
 const PRD = "P";
 const STAGE = "S";
 
 /** 查詢所有Topic */
 function getAllETLTopics() {
-  rows.splice(0, rows.length);
+  // rows.splice(0, rows.length);
 
-  let url = "ETLManager/ETLDiagram/GetAllETLTopics?version=" + PRD;
-  httpGetRequest<ConstValueList[]>(url)
-    .then(res => {
-      // console.log("getAllETLTopics:", res);
-      rows.splice(0, 0, ...res);
-    })
+  // let url = "ETLManager/ETLDiagram/GetAllETLTopics?version=" + PRD;
+  // httpGetRequest<ConstValueList[]>(url)
+  //   .then(res => {
+  //     // console.log("getAllETLTopics:", res);
+  //     rows.splice(0, 0, ...res);
+  //   })
+  table.rows = allETLTopics;
 }
 
 /** router切換 */

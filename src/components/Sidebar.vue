@@ -55,6 +55,9 @@ const { onDragStart } = useDragAndDrop();
 import { useFlowDiagramStore } from "@/stores/flowDiagram";
 const flowDiagram = useFlowDiagramStore();
 
+// 假資料
+import nodeTemplates from "@/data/nodeTemplates.json";
+
 onMounted(() => {
   GetNodeTemplates();
 })
@@ -63,12 +66,14 @@ onMounted(() => {
 const NodeTemplates = ref<Record<string, Array<{ Name: string; Type: string; ExportName: string }>>>();
 /** 畫面左邊所有ETL Name 清單GroupBy Category */
 function GetNodeTemplates() {
-  let url = "ETLManager/ETLDiagram/GetNodeTemplates";
-  httpGetRequest<any>(url)
-    .then(res => {
-      // console.log("GetNodeTemplates:", res);
-      NodeTemplates.value = res;
-    })
+  // let url = "ETLManager/ETLDiagram/GetNodeTemplates";
+  // httpGetRequest<any>(url)
+  //   .then(res => {
+  //     // console.log("GetNodeTemplates:", res);
+  //     NodeTemplates.value = res;
+  //   })
+
+  NodeTemplates.value = nodeTemplates;
 }
 
 function getIconName(type: string) {
