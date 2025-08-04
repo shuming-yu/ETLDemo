@@ -21,6 +21,7 @@
     "@vue-flow/minimap": "^1.5.3",
     "@vue-flow/node-resizer": "^1.5.0",
     "axios": "^1.11.0",
+    "dayjs": "^1.11.13",
     "material-symbols": "^0.33.0",
     "pinia": "^3.0.3",
     "quasar": "^2.18.2",

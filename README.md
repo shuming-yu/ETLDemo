@@ -15,6 +15,7 @@ npm install material-symbols
 
 npm install chalk inquirer ora --save-dev
 
+npm install dayjs
 
 npm add @vue-flow/core @vue-flow/background @vue-flow/controls @vue-flow/minimap @vue-flow/node-resizer
 ```

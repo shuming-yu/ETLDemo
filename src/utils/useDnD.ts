@@ -2,6 +2,8 @@ import { useVueFlow } from '@vue-flow/core'
 import { ref, watch, type Ref } from 'vue'
 import type { Node, XYPosition } from '@vue-flow/core'
 import { httpGetRequest } from "@/utils/webUtil"
+import { DateTimePattern } from "@/types/Utils"
+import dayjs from "dayjs"
 
 import { useFlowDiagramStore } from "@/stores/flowDiagram";
 const flowDiagram = useFlowDiagramStore();
@@ -11,11 +13,14 @@ let tempNewNode: Node;
 /** 抓取唯一 NodeId */
 function getUniqueNodeId(): Promise<string> {
   let url = "ETLManager/ETLDiagram/GetUniqueNodeId";
-  return httpGetRequest<string>(url)
-    .then(res => {
-      // console.log("GetUniqueNodeId:", res);
-      return res;
-    });
+  // return httpGetRequest<string>(url)
+  //   .then(res => {
+  //     // console.log("GetUniqueNodeId:", res);
+  //     return res;
+  //   });
+
+  const now = dayjs().format(DateTimePattern.SERIAL_DATE_TIME);
+  return Promise.resolve(now);
 }
 
 /**
